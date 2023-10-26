@@ -103,14 +103,14 @@ func (calc *Calculator) WeConsider() (interface{}, error) {
 		}
 		return answer, nil
 	case "-":
-		answer := calc.NumOne + calc.NumTwo
+		answer := calc.NumOne - calc.NumTwo
 		if calc.Type == "roman" {
 			return GetRomanFromArabic(answer)
 		}
 		return answer, nil
 
 	case "*":
-		answer := calc.NumOne + calc.NumTwo
+		answer := calc.NumOne * calc.NumTwo
 		if calc.Type == "roman" {
 			return GetRomanFromArabic(answer)
 		}
@@ -120,7 +120,7 @@ func (calc *Calculator) WeConsider() (interface{}, error) {
 		if calc.NumTwo == 0 {
 			return 0, fmt.Errorf("деление на ноль запрещено")
 		}
-		answer := calc.NumOne + calc.NumTwo
+		answer := calc.NumOne / calc.NumTwo
 		if calc.Type == "roman" {
 			return GetRomanFromArabic(answer)
 		}

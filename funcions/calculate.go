@@ -13,6 +13,11 @@ type Calculator struct {
 	Type     string
 }
 
+type RomanNumeralSystem struct {
+	Value  int
+	Symbol string
+}
+
 func GetArabicFromRomans(romanNum string) (int, error) {
 	sliceRoman := map[string]int{
 		"I":    1,
@@ -34,23 +39,34 @@ func GetArabicFromRomans(romanNum string) (int, error) {
 }
 
 func GetRomanFromArabic(arabicNum int) (string, error) {
-	sliceRoman := map[int]string{
-		1:  "I",
-		2:  "II",
-		3:  "III",
-		4:  "IV",
-		5:  "V",
-		6:  "VI",
-		7:  "VII",
-		8:  "VIII",
-		9:  "IX",
-		10: "X",
+	var romanNumerals = []RomanNumeralSystem{
+		{500, "D"},
+		{400, "CD"},
+		{100, "C"},
+		{90, "XC"},
+		{50, "L"},
+		{40, "XL"},
+		{10, "X"},
+		{9, "IX"},
+		{5, "V"},
+		{4, "IV"},
+		{1, "I"},
 	}
-	romanNum, err := sliceRoman[arabicNum]
-	if !err {
-		return "I", fmt.Errorf("неверная римская цифра")
+
+	if arabicNum <= 0 || arabicNum > 100 {
+		return "", fmt.Errorf("неверное римское число")
 	}
+
+	var romanNum string
+	for _, numeral := range romanNumerals {
+		for arabicNum >= numeral.Value {
+			romanNum += numeral.Symbol
+			arabicNum -= numeral.Value
+		}
+	}
+
 	return romanNum, nil
+
 }
 
 func ParseExpression(expres string) (*Calculator, error) {
@@ -111,6 +127,7 @@ func (calc *Calculator) WeConsider() (interface{}, error) {
 
 	case "*":
 		answer := calc.NumOne * calc.NumTwo
+		fmt.Println(answer)
 		if calc.Type == "roman" {
 			return GetRomanFromArabic(answer)
 		}

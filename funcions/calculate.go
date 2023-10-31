@@ -127,7 +127,6 @@ func (calc *Calculator) WeConsider() (interface{}, error) {
 
 	case "*":
 		answer := calc.NumOne * calc.NumTwo
-		fmt.Println(answer)
 		if calc.Type == "roman" {
 			return GetRomanFromArabic(answer)
 		}
